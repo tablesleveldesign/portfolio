@@ -10,13 +10,15 @@
     "node": ">=22.23.4"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "tokens": "node scripts/build-tokens.mjs",
+    "dev": "npm run tokens && astro dev",
+    "build": "npm run tokens && astro build",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "npm run tokens && astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.2",
