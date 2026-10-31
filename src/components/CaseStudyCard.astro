@@ -1,0 +1,41 @@
+---
+// Homepage card: one sentence that tells the story, plus the key facts.
+interface Props {
+  title: string;
+  summary: string;
+  meta: string;
+  href?: string;
+}
+
+const { title, summary, meta, href } = Astro.props;
+---
+
+<article class="card">
+  <p class="meta">{meta}</p>
+  <h3>{href ? <a href={href}>{title}</a> : title}</h3>
+  <p class="summary">{summary}</p>
+</article>
+
+<style>
+  .card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+  .meta {
+    font-size: var(--font-size--1);
+    color: var(--text-muted);
+    margin-bottom: var(--space-2);
+  }
+  h3 {
+    margin-bottom: var(--space-2);
+  }
+  h3 a {
+    color: var(--text-primary);
+  }
+  .summary {
+    color: var(--text-secondary);
+    margin: 0;
+  }
+</style>

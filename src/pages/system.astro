@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
+import TokenExplorer from '../components/TokenExplorer';
+import tokens from '../../tokens/tokens.json';
+
+const typeSteps = Object.entries(tokens.primitive.font.size).sort(([a], [b]) => Number(b) - Number(a));
+const spaceSteps = Object.entries(tokens.primitive.space).filter(([key]) => key !== '0');
+---
+
+<Base
+  title="Design foundation: Todd Ables"
+  description="The tokens, type scale, spacing, and components behind this portfolio, built from scratch."
+>
+  <header class="page-head">
+    <h1>Design foundation</h1>
+    <p>
+      Everything on this site is built from one token file. Primitives hold raw values, semantic tokens map them per
+      theme, and components only use semantic tokens. That keeps light and dark mode a data change, not a code change.
+    </p>
+  </header>
+
+  <section class="block" aria-labelledby="color">
+    <h2 id="color">Color</h2>
+    <TokenExplorer client:visible />
+  </section>
+
+  <section class="block" aria-labelledby="type">
+    <h2 id="type">Type scale</h2>
+    <p>A 1.25 ratio from a 16px base, set in the system font stack so nothing loads before text appears.</p>
+    <ul class="type-list">
+      {typeSteps.map(([step, size]) => (
+        <li>
+          <code>
+            --font-size-{step} · {size}
+          </code>
+          <span style={`font-size: var(--font-size-${step})`}>Analysts needed a checklist</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="block" aria-labelledby="space">
+    <h2 id="space">Spacing</h2>
+    <p>A 4px grid. Steps skip where the layouts never needed them.</p>
+    <ul class="space-list">
+      {spaceSteps.map(([step, size]) => (
+        <li>
+          <code>--space-{step}</code>
+          <span class="bar" style={`width: var(--space-${step})`} />
+          <code>{size}</code>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="block" aria-labelledby="components">
+    <h2 id="components">Components</h2>
+    <h3>Button</h3>
+    <div class="row">
+      <Button>Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+    </div>
+    <h3>Case study card</h3>
+    <p class="hint">Example content, for layout only.</p>
+    <div class="cards">
+      <CaseStudyCard
+        meta="Example · Product design · 2026"
+        title="A one-sentence title that tells the whole story"
+        summary="The card leads with the result. Role, team, and timeline sit on the case study page itself."
+      />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    margin-bottom: var(--space-12);
+  }
+  .block {
+    padding-bottom: var(--space-12);
+    margin-bottom: var(--space-12);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .type-list,
+  .space-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .type-list li {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .type-list code,
+  .space-list code {
+    font-size: var(--font-size--1);
+    color: var(--text-muted);
+    background: none;
+    padding: 0;
+  }
+  .space-list li {
+    display: grid;
+    grid-template-columns: 6rem auto 1fr;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .bar {
+    display: block;
+    height: var(--space-4);
+    background: var(--accent-default);
+    border-radius: var(--radius-sm);
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+  .hint {
+    font-size: var(--font-size--1);
+    color: var(--text-muted);
+  }
+  .cards {
+    max-width: 28rem;
+  }
+</style>
