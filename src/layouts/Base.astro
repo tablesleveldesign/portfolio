@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle';
+import { SITE } from '../site';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <!-- Apply a saved theme before first paint so there is no flash. -->
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {
+        /* storage unavailable: fall back to the OS setting */
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container bar">
+        <a class="wordmark" href="/">
+          Todd Ables
+        </a>
+        <nav aria-label="Main">
+          <a href="/system" aria-current={path.startsWith('/system') ? 'page' : undefined}>
+            Design foundation
+          </a>
+        </nav>
+        <ThemeToggle client:load />
+      </div>
+    </header>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="container site-footer">
+      <a href={SITE.github}>GitHub</a>
+      <a href={SITE.linkedin}>LinkedIn</a>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border-default);
+    margin-bottom: var(--space-12);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    min-height: var(--space-16);
+    padding-block: var(--space-3);
+  }
+  .wordmark,
+  nav a {
+    white-space: nowrap;
+  }
+  .wordmark {
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  nav {
+    margin-right: auto;
+  }
+  nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-6);
+    padding-block: var(--space-8);
+    margin-top: var(--space-12);
+    border-top: 1px solid var(--border-default);
+    font-size: var(--font-size--1);
+  }
+  nav a[aria-current='page'],
+  nav a:hover {
+    color: var(--text-primary);
+  }
+</style>

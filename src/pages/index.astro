@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import { SITE } from '../site';
+---
+
+<Base
+  title="Todd Ables: designer who builds"
+  description="Todd Ables designs and builds web products, from the first conversation with users through launch."
+>
+  <section class="intro">
+    <h1>I design web products, then build them.</h1>
+    <p class="lede">
+      12+ years taking products from the first conversation with users through launch and ongoing support, across
+      financial services, payments, and public safety. Trained in level design at SMU Guildhall.
+    </p>
+    <p class="status">
+      This site is in progress. The design foundation is built first, in public, and the case studies come next.
+    </p>
+    <div class="actions">
+      <Button href="/system">See the design foundation</Button>
+      <Button href={SITE.linkedin} variant="secondary">
+        LinkedIn
+      </Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro {
+    padding-bottom: var(--space-16);
+  }
+  .lede {
+    font-size: var(--font-size-1);
+    color: var(--text-secondary);
+  }
+  .status {
+    color: var(--text-muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+</style>
