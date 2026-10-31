@@ -10,6 +10,8 @@ interface Props {
 
 const { title, description } = Astro.props;
 const path = Astro.url.pathname;
+// The privacy note only renders when analytics is actually configured for this build.
+const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
 ---
 
 <!doctype html>
@@ -47,9 +49,23 @@ const path = Astro.url.pathname;
       <slot />
     </main>
     <footer class="container site-footer">
-      <a href={SITE.github}>GitHub</a>
-      <a href={SITE.linkedin}>LinkedIn</a>
+      <a href={SITE.github} data-track-outbound="github">
+        GitHub
+      </a>
+      <a href={SITE.linkedin} data-track-outbound="linkedin">
+        LinkedIn
+      </a>
+      {analyticsOn && (
+        <p class="privacy">
+          This site uses PostHog to see how pages are used. No cookies, and session recordings mask anything you type.
+        </p>
+      )}
     </footer>
+    <script>
+      import { initAnalytics, trackOutboundLinks } from '../lib/analytics';
+      initAnalytics(import.meta.env.PUBLIC_POSTHOG_KEY, import.meta.env.PUBLIC_POSTHOG_HOST, import.meta.env.PROD);
+      trackOutboundLinks();
+    </script>
   </body>
 </html>
 
@@ -91,6 +107,10 @@ const path = Astro.url.pathname;
     margin-top: var(--space-12);
     border-top: 1px solid var(--border-default);
     font-size: var(--font-size--1);
+  }
+  .privacy {
+    color: var(--text-muted);
+    margin: 0;
   }
   nav a[aria-current='page'],
   nav a:hover {

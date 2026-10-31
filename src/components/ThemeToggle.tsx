@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { track } from '../lib/analytics';
 
 type Choice = 'system' | 'light' | 'dark';
 const ORDER: Choice[] = ['system', 'light', 'dark'];
@@ -35,6 +36,7 @@ export default function ThemeToggle() {
     } catch {
       /* storage unavailable: the choice lasts for this page view */
     }
+    track('theme_changed', { theme: next });
   }
 
   return (

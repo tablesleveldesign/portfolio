@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import rawTokens from '../../tokens/tokens.json';
 import { THEMES, checkContrast, contrast, resolveTheme, type Theme, type Tokens } from '../../tokens/lib.mjs';
 import styles from './TokenExplorer.module.css';
+import { track } from '../lib/analytics';
 
 const tokens = rawTokens as unknown as Tokens;
 const resolved: Record<Theme, Record<string, string>> = {
@@ -28,7 +29,13 @@ export default function TokenExplorer() {
         <div className={styles.controls}>
           <label>
             Text
-            <select value={fg} onChange={(e) => setFg(e.target.value)}>
+            <select
+              value={fg}
+              onChange={(e) => {
+                setFg(e.target.value);
+                track('token_pair_checked', { fg: e.target.value, bg });
+              }}
+            >
               {names.map((n) => (
                 <option key={n}>{n}</option>
               ))}
@@ -36,7 +43,13 @@ export default function TokenExplorer() {
           </label>
           <label>
             Background
-            <select value={bg} onChange={(e) => setBg(e.target.value)}>
+            <select
+              value={bg}
+              onChange={(e) => {
+                setBg(e.target.value);
+                track('token_pair_checked', { fg, bg: e.target.value });
+              }}
+            >
               {names.map((n) => (
                 <option key={n}>{n}</option>
               ))}
