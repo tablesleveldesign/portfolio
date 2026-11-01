@@ -1,0 +1,109 @@
+.explorer {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.controls label {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--font-size--1);
+  color: var(--text-secondary);
+}
+
+.controls select {
+  font: inherit;
+  font-size: var(--font-size-0);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+}
+
+.pairRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-4);
+}
+
+.pairPreview {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+}
+
+.pairTheme {
+  font-size: var(--font-size--1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pairSample {
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-medium);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size--1);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+}
+
+.table thead th {
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.swatch {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  vertical-align: middle;
+  margin-right: var(--space-2);
+}
+
+.note {
+  color: var(--text-secondary);
+}
+
+.checks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--font-size--1);
+}
+
+.checks li {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+@media (max-width: 40rem) {
+  .table th,
+  .table td {
+    white-space: normal;
+  }
+}

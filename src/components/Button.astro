@@ -1,0 +1,48 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary';
+  /** Name for the outbound_clicked analytics event (external links only). */
+  track?: string;
+}
+
+const { href, variant = 'primary', track } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class:list={['btn', variant]} href={href} type={href ? undefined : 'button'} data-track-outbound={track}>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font: inherit;
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease;
+  }
+  .primary {
+    background: var(--accent-default);
+    color: var(--accent-contrast);
+  }
+  .primary:hover {
+    background: var(--accent-hover);
+  }
+  .secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+  }
+  .secondary:hover {
+    background: var(--surface-sunken);
+  }
+</style>

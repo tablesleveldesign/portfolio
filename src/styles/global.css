@@ -1,0 +1,99 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-family-sans);
+  font-size: 100%;
+  line-height: var(--font-leading-normal);
+  background: var(--surface-base);
+  color: var(--text-primary);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  line-height: var(--font-leading-tight);
+  margin: 0 0 var(--space-4);
+}
+
+h1 {
+  font-size: var(--font-size-4);
+}
+h2 {
+  font-size: var(--font-size-2);
+}
+h3 {
+  font-size: var(--font-size-1);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+  max-width: 65ch;
+}
+
+a {
+  color: var(--accent-text);
+  text-underline-offset: 0.2em;
+}
+
+code {
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+  background: var(--surface-sunken);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* Island markup from ThemeToggle.tsx (React components can't use Astro scoped styles). */
+.theme-toggle {
+  white-space: nowrap;
+  font: inherit;
+  font-size: var(--font-size--1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.theme-toggle:hover {
+  background: var(--surface-sunken);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

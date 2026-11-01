@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.env*
+!.env.example
+.DS_Store
+# Generated from tokens/tokens.json by scripts/build-tokens.mjs
+src/styles/tokens.css
