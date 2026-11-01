@@ -39,9 +39,16 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 3. Show Todd the files, a short summary of the diff, and the proposed message. Commit only after he approves or edits it.
 4. Keep the `Co-Authored-By` trailer. Don't put "Generated with" lines in commit messages.
 5. Fold follow-up fixes into the commit they belong to before pushing (`git commit --fixup <sha>`, then `GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash main`). Never rewrite history on `main`.
-6. Open a PR with the template below. Merge with rebase or a merge commit, not squash, so the individual commits stay readable.
+6. Open the PR as a **draft** as soon as the branch has its first commit, and fill in the description as the work goes.
+7. Only Todd merges. Never merge a PR, mark it ready, or push to `main`.
 
-## PR template
+## Pull requests
+
+The PR description is copied into the merge commit on `main` at the moment of merging. Editing the PR afterward doesn't change the commit, and `main` is never rewritten. So the description is permanent history and must be finished before merging.
+
+**Title:** same format as a commit subject: `feat(tokens): replace placeholder palette with figma variables`.
+
+**Description:** use the template in `.github/pull_request_template.md` (create it from the block below if the repo doesn't have one).
 
 ```markdown
 ## Changes
@@ -55,9 +62,40 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 ## Testing
 
 - [ ] Tests added or updated
-- [ ] Checked by hand (both themes and phone width for anything visual)
+- [ ] Checked by hand (what, and where)
+```
 
-## Screenshots
+**Rules for the description**
+
+- Replace every placeholder line with real content. No template text may remain when the PR is marked ready.
+- Delete any section that would only say "n/a". A one-commit PR can be three short lines.
+- Decisions say why, including alternatives you rejected. If there were no real decisions, say what the change doesn't affect (for example "No behavior change").
+- Testing lists what was actually run or checked. Tick a box only if it was done.
+- Screenshots go in a **PR comment**, not the description. Images in the description become long URL lines in the merge commit.
+- Same voice as commits: plain, specific, no em dashes, no marketing words.
+
+**Before telling Todd a PR is ready to merge**
+
+1. CI is green.
+2. The title is a valid conventional commit subject.
+3. The description has no placeholder text and matches the commits on the branch.
+4. Screenshots for visual changes are posted as a comment.
+5. Remind Todd to read the merge dialog and choose **Create a merge commit** (never squash).
+
+**Short example (one-commit PR)**
+
+```markdown
+## Changes
+
+- Add `permissions: contents: read` to the CI workflow
+
+## Decisions
+
+- The workflow only reads code, so its token shouldn't be able to write. No behavior change.
+
+## Testing
+
+- [x] CI passes on this PR
 ```
 
 ## Examples
