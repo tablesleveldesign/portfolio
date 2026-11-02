@@ -15,7 +15,7 @@ Todd Ables' portfolio: Astro + React islands on a design foundation built from o
 - React only for interactive pieces (islands). Everything else is Astro.
 - Write from scratch. No code, text, or designs from any employer.
 - README and copy: plain and specific, no em dashes, no marketing words. Explain decisions.
-- Analytics events are listed in `src/lib/analytics.ts`; add new ones there, and keep cookieless mode and input masking on.
+- Analytics events are listed in `src/lib/analytics.ts`; add new ones there, and keep cookies and session replay behind the consent banner (`cookieless_mode: 'on_reject'`) and input masking on.
 - Check for visual changes in both themes and at phone width before committing.
 
 ## Layout

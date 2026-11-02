@@ -7,6 +7,7 @@ import '@fontsource/jetbrains-mono/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-400-italic.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import '../styles/global.css';
+import ConsentBanner from '../components/ConsentBanner';
 import ThemeToggle from '../components/ThemeToggle';
 import { BUILD_LOG, formatDate } from '../lib/build-log';
 import { SITE } from '../site';
@@ -91,14 +92,20 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
       </nav>
       {analyticsOn && (
         <p class="privacy">
-          This site uses PostHog to see how pages are used. No cookies, and session recordings mask anything you type.
+          This site uses PostHog to see how pages are used. If you accept, it sets a cookie and records your session,
+          with anything you type masked. If you reject, you’re counted without cookies.{' '}
+          <button type="button" class="privacy-choice" data-consent-reopen>
+            Change your choice
+          </button>
         </p>
       )}
     </footer>
+    {analyticsOn && <ConsentBanner client:load />}
     <script>
-      import { initAnalytics, trackOutboundLinks } from '../lib/analytics';
+      import { initAnalytics, reopenConsent, trackOutboundLinks } from '../lib/analytics';
       initAnalytics(import.meta.env.PUBLIC_POSTHOG_KEY, import.meta.env.PROD);
       trackOutboundLinks();
+      document.querySelector('[data-consent-reopen]')?.addEventListener('click', reopenConsent);
     </script>
   </body>
 </html>
@@ -181,6 +188,20 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
   .privacy {
     flex-basis: 100%;
     margin: 0;
+  }
+  .privacy-choice {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    cursor: pointer;
+  }
+  .privacy-choice:hover {
+    color: var(--accent-text);
   }
 
   /* The name and toggle share the top row, and the nav takes its own row with taller tap targets. */

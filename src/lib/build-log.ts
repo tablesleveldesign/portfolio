@@ -9,6 +9,14 @@ export interface BuildLogEntry {
 
 export const BUILD_LOG: BuildLogEntry[] = [
   {
+    date: '2026-11-02',
+    title: 'Analytics: switched to a consent banner',
+    body: [
+      'I tested with PostHog’s cookieless mode set to always and didn’t get any session replays, even after moving PostHog onto this domain. That mode turns the recorder off, so I couldn’t have both.',
+      'Now there’s a consent banner. If you accept, PostHog sets a cookie and records your session, with anything you type masked. If you reject or ignore the banner, you’re counted without cookies.',
+    ],
+  },
+  {
     date: '2026-11-01',
     title: 'Favicon: a pedestal table drawn as a T',
     body: [

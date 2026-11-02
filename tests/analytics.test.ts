@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { initAnalytics, track } from '../src/lib/analytics';
+import { initAnalytics, reopenConsent, setConsent, shouldAskForConsent, track } from '../src/lib/analytics';
 
 describe('analytics', () => {
   it('stays off without a key', () => {
@@ -12,5 +12,11 @@ describe('analytics', () => {
 
   it('makes track() a safe no-op when off', () => {
     expect(() => track('theme_changed', { theme: 'dark' })).not.toThrow();
+  });
+
+  it('never asks for consent when off', () => {
+    setConsent(true);
+    reopenConsent();
+    expect(shouldAskForConsent()).toBe(false);
   });
 });
