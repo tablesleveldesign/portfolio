@@ -97,7 +97,7 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
     </footer>
     <script>
       import { initAnalytics, trackOutboundLinks } from '../lib/analytics';
-      initAnalytics(import.meta.env.PUBLIC_POSTHOG_KEY, import.meta.env.PUBLIC_POSTHOG_HOST, import.meta.env.PROD);
+      initAnalytics(import.meta.env.PUBLIC_POSTHOG_KEY, import.meta.env.PROD);
       trackOutboundLinks();
     </script>
   </body>

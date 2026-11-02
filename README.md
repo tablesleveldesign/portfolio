@@ -10,7 +10,7 @@ My portfolio site, built in public. I'm a designer who builds: I've spent 12+ ye
 - **Light and dark themes** that follow the OS setting, with a toggle that overrides it and remembers the choice.
 - **A placeholder site:** a [home page](src/pages/index.astro) built around a large T, an [About page](src/pages/about.astro), a [build log](src/pages/build-log.astro), and [one written piece](src/pages/writing/hand-written-css.astro).
 - **A token explorer** on [`/system`](src/pages/system.astro): every semantic color in both themes side by side, plus a pair checker that shows the contrast ratio of any text and background combination. The page is hidden for now: nothing links to it and it asks search engines not to index it, but the URL still works.
-- **Analytics with PostHog**, off by default: web analytics, masked session replay, and three custom events (theme changed, token pair checked, outbound link clicked). See [`src/lib/analytics.ts`](src/lib/analytics.ts).
+- **Analytics with PostHog**, off by default: web analytics, masked session replay, and three custom events (theme changed, token pair checked, outbound link clicked), served from the site's own domain. See [`src/lib/analytics.ts`](src/lib/analytics.ts) and [`vercel.json`](vercel.json).
 - **Contrast checks that fail the build.** Text and background pairs are declared in the token file with a WCAG minimum. If a color change drops one below it, `npm run build` stops and names the pair.
 
 ## Decisions so far
@@ -22,6 +22,8 @@ My portfolio site, built in public. I'm a designer who builds: I've spent 12+ ye
 **Contrast is a test, not a review step.** I've watched design systems drift because accessibility was checked once, at the start. Here the required pairs live next to the colors they constrain, and CI enforces them on every pull request.
 
 **Analytics without cookies.** The site runs PostHog in cookieless mode, so it sets no cookies and uses no browser storage, and visitors are counted with a hash on PostHog's side. That means no consent banner, at the cost of less precise returning-visitor counts. Session recordings mask every input, Do Not Track is respected, and nothing loads in development or when no project key is set. The footer says the site uses PostHog whenever it does.
+
+**PostHog through a reverse proxy.** A test visit in Firefox sent pageviews but no session replay or autocapture, most likely because the browser blocked PostHog's asset domain while the event endpoint got through. Rewrites in `vercel.json` now serve all PostHog traffic from this site's domain, under `/legs`. PostHog warns that blockers match obvious paths like `/analytics` or `/posthog`, and tables have legs. This also means a blocker no longer stops analytics for a visitor who has one, though Do Not Track is still respected. PostHog's managed proxy was the alternative, but it needs a DNS subdomain and keeps the config out of this repo. Proxied traffic counts toward Vercel's data transfer, which a portfolio's traffic won't come close to using up on the Hobby plan.
 
 **Self-hosted fonts.** Bricolage Grotesque and JetBrains Mono come from npm packages and ship with the site instead of loading from Google Fonts, so a visitor's browser doesn't contact a third party just to show text. The cost is a few font files to download. The fonts themselves are set for launch, not final, and I'll revisit them when the Figma variables are done.
 
@@ -57,6 +59,7 @@ src/
 tests/             vitest
 docs/COMMITS.md    commit and PR conventions
 CLAUDE.md          instructions for coding agents working in this repo
+vercel.json        rewrites that serve PostHog from this site's domain
 ```
 
 ## Next

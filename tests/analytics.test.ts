@@ -3,11 +3,11 @@ import { initAnalytics, track } from '../src/lib/analytics';
 
 describe('analytics', () => {
   it('stays off without a key', () => {
-    expect(initAnalytics(undefined, undefined, true)).toBe(false);
+    expect(initAnalytics(undefined, true)).toBe(false);
   });
 
   it('stays off in development builds', () => {
-    expect(initAnalytics('phc_test', undefined, false)).toBe(false);
+    expect(initAnalytics('phc_test', false)).toBe(false);
   });
 
   it('makes track() a safe no-op when off', () => {
