@@ -24,5 +24,6 @@ Todd Ables' portfolio: Astro + React islands on a design foundation built from o
 - `scripts/build-tokens.mjs`: writes `src/styles/tokens.css` (generated, not committed)
 - `src/components/`: Astro components and React islands (`*.tsx`)
 - `src/lib/analytics.ts`: PostHog setup and event list
+- `src/lib/build-log.ts`: build log entries, newest first
 - `src/site.ts`: profile links
 - `tests/`: vitest
