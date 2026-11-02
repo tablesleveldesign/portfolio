@@ -8,6 +8,7 @@ import '@fontsource/jetbrains-mono/latin-400-italic.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle';
+import { BUILD_LOG, formatDate } from '../lib/build-log';
 import { SITE } from '../site';
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 
 const { title, description, noindex = false } = Astro.props;
 const path = Astro.url.pathname;
+const lastUpdated = BUILD_LOG[0].date;
 // The privacy note only renders when analytics is actually configured for this build.
 const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
 ---
@@ -47,6 +49,7 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
         <strong>Ope, you got here early!</strong> I’m building this portfolio in public, so things will move around. The{' '}
         <a href="/build-log">build log</a> shows what changed and why.
       </p>
+      <span class="stamp">Last updated {formatDate(lastUpdated)}</span>
     </div>
     <header class="site-header gutter">
       <a class="wordmark" href="/">
@@ -116,6 +119,12 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
   }
   .banner strong {
     color: var(--accent-text);
+  }
+  .stamp {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--2);
+    color: var(--text-muted);
+    white-space: nowrap;
   }
   .site-header {
     display: flex;
