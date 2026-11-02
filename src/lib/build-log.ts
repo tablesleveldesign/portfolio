@@ -10,6 +10,14 @@ export interface BuildLogEntry {
 export const BUILD_LOG: BuildLogEntry[] = [
   {
     date: '2026-11-01',
+    title: 'Favicon: a pedestal table drawn as a T',
+    body: [
+      'My handle is tablesleveldesign, so I wanted a table in the icon. I compared four options at 16 px, in light and dark browser tabs: a side table, a pedestal table, a data table, and a TA monogram.',
+      'I picked the pedestal table because it reads as both a table and a T, and it still holds up at 16 px. It also matches the T on the homepage. The orange is the same placeholder as the rest of the site, so the icon will change with the palette.',
+    ],
+  },
+  {
+    date: '2026-11-01',
     title: 'Put up a placeholder design and color theme',
     body: [
       'The colors and layout you’re looking at are placeholders, and the fonts are only set for this launch. They all stand in until the Figma variables are done, so expect them to change.',

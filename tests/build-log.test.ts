@@ -7,9 +7,9 @@ describe('build log', () => {
     expect(dates).toEqual([...dates].sort().reverse());
   });
 
-  it('says on the newest entry that the design and colors are placeholders', () => {
-    const newest = BUILD_LOG[0];
-    expect(newest.title).toMatch(/placeholder design and color theme/i);
+  it('says somewhere that the design and colors are placeholders', () => {
+    const titles = BUILD_LOG.map((entry) => entry.title);
+    expect(titles.some((title) => /placeholder design and color theme/i.test(title))).toBe(true);
   });
 
   it('formats dates without shifting the day', () => {

@@ -12,10 +12,12 @@ let enabled = false;
  * Starts PostHog only when a project key is configured and this is a production build,
  * so local development and forks never send data.
  */
-export function initAnalytics(key: string | undefined, host: string | undefined, isProd: boolean): boolean {
+export function initAnalytics(key: string | undefined, isProd: boolean): boolean {
   if (enabled || !key || !isProd || typeof window === 'undefined') return enabled;
   posthog.init(key, {
-    api_host: host || 'https://us.i.posthog.com',
+    // Served from this site's domain by the rewrites in vercel.json.
+    api_host: '/legs',
+    ui_host: 'https://us.posthog.com',
     defaults: '2026-08-30',
     // No cookies or browser storage; PostHog identifies visitors with a server-side hash instead.
     // Requires cookieless mode to be turned on in the PostHog project settings.
