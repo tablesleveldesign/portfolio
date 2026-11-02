@@ -13,9 +13,11 @@ import { SITE } from '../site';
 interface Props {
   title: string;
   description: string;
+  /** Keeps a page out of search results, for pages that exist but aren't linked from the site. */
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const path = Astro.url.pathname;
 // The privacy note only renders when analytics is actually configured for this build.
 const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
@@ -28,6 +30,7 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <!-- Apply a saved theme before first paint so there is no flash. -->
     <script is:inline>
       try {
@@ -39,29 +42,47 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
     </script>
   </head>
   <body>
-    <header class="site-header">
-      <div class="container bar">
-        <a class="wordmark" href="/">
-          Todd Ables
-        </a>
+    <div class="banner" role="note">
+      <p>
+        <strong>Ope, you got here early!</strong> I’m building this portfolio in public, so things will move around. The{' '}
+        <a href="/build-log">build log</a> shows what changed and why.
+      </p>
+    </div>
+    <header class="site-header gutter">
+      <a class="wordmark" href="/">
+        Todd Ables
+      </a>
+      <div class="header-right">
         <nav aria-label="Main">
-          <a href="/system" aria-current={path.startsWith('/system') ? 'page' : undefined}>
-            Design foundation
+          <a href="/about" aria-current={path.startsWith('/about') ? 'page' : undefined}>
+            About
+          </a>
+          <a href="/build-log" aria-current={path.startsWith('/build-log') ? 'page' : undefined}>
+            Build log
+          </a>
+          <a href="/writing/hand-written-css" aria-current={path.startsWith('/writing') ? 'page' : undefined}>
+            Writing
+          </a>
+          <a href={SITE.repo} data-track-outbound="repo">
+            GitHub ↗
           </a>
         </nav>
         <ThemeToggle client:load />
       </div>
     </header>
-    <main class="container">
+    <main class="gutter">
       <slot />
     </main>
-    <footer class="container site-footer">
-      <a href={SITE.github} data-track-outbound="github">
-        GitHub
-      </a>
-      <a href={SITE.linkedin} data-track-outbound="linkedin">
-        LinkedIn
-      </a>
+    <footer class="site-footer gutter">
+      <span>© 2026 Todd Ables · Built in public</span>
+      <nav aria-label="Elsewhere">
+        <a href={SITE.repo} data-track-outbound="repo">
+          GitHub
+        </a>
+        <a href={SITE.linkedin} data-track-outbound="linkedin">
+          LinkedIn
+        </a>
+      </nav>
       {analyticsOn && (
         <p class="privacy">
           This site uses PostHog to see how pages are used. No cookies, and session recordings mask anything you type.
@@ -77,50 +98,98 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
 </html>
 
 <style>
-  .site-header {
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-6);
+    align-items: baseline;
+    justify-content: space-between;
+    padding: var(--space-3) var(--gutter);
     border-bottom: 1px solid var(--border-default);
-    margin-bottom: var(--space-12);
+    font-size: var(--font-size--1);
+    line-height: 1.5;
+    color: var(--text-muted);
   }
-  .bar {
+  .banner p {
+    margin: 0;
+    max-width: 80ch;
+  }
+  .banner strong {
+    color: var(--accent-text);
+  }
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding-top: var(--space-7);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--1);
+  }
+  .wordmark {
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+  }
+  .header-right {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
-    min-height: var(--space-16);
-    padding-block: var(--space-3);
+    gap: var(--space-3) var(--space-7);
   }
-  .wordmark,
-  nav a {
-    white-space: nowrap;
+  .site-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-7);
   }
-  .wordmark {
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
+  .site-header nav a {
     text-decoration: none;
   }
-  nav {
-    margin-right: auto;
-  }
-  nav a {
-    color: var(--text-secondary);
-    text-decoration: none;
+  .site-header nav a[aria-current='page'] {
+    color: var(--accent-text);
+    text-decoration: underline;
   }
   .site-footer {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-2) var(--space-6);
-    padding-block: var(--space-8);
-    margin-top: var(--space-12);
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-6);
+    margin-top: var(--space-18);
+    padding-block: var(--space-6) var(--space-10);
     border-top: 1px solid var(--border-default);
-    font-size: var(--font-size--1);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--2);
+    color: var(--text-muted);
+  }
+  .site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
   }
   .privacy {
-    color: var(--text-muted);
+    flex-basis: 100%;
     margin: 0;
   }
-  nav a[aria-current='page'],
-  nav a:hover {
-    color: var(--text-primary);
+
+  /* The name and toggle share the top row, and the nav takes its own row with taller tap targets. */
+  @media (max-width: 860px) {
+    .site-header {
+      padding-top: var(--space-5);
+    }
+    .header-right {
+      display: contents;
+    }
+    .wordmark {
+      order: 1;
+    }
+    .site-header nav {
+      order: 3;
+      flex-basis: 100%;
+      gap: 0 var(--space-6);
+    }
+    .site-header nav a {
+      display: inline-block;
+      padding: var(--space-3) 0;
+    }
   }
 </style>
