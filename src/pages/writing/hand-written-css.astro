@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../site';
+---
+
+<Base
+  title="Why I’m writing my own CSS for this site: Todd Ables"
+  description="The first real decision on this site was what to build the interface on. I picked the option that takes the most work up front."
+>
+  <article class="page">
+    <h1>Why I’m writing my own CSS for this site</h1>
+    <p class="lede">
+      The first real decision on this site was what to build the interface on. I picked the option that takes the most
+      work up front, and here’s why.
+    </p>
+
+    <h2>What the site actually needs</h2>
+    <p>
+      A portfolio doesn’t need much: buttons, cards, a case-study header, a theme switch, and a small tool for exploring
+      the color tokens. That’s roughly 8 to 12 components. The question was never whether a library could handle it. Any
+      of them could. The question was what each choice would say about the work, and what it would cost me.
+    </p>
+
+    <h2>The options I weighed</h2>
+    <ul class="options">
+      <li>
+        <b>A copy-in component kit (shadcn/ui on Tailwind)</b>
+        <span class="tag">Fastest · rejected</span>
+        <p>
+          The quickest way to a good-looking site, and coding agents know it extremely well. But the default look is
+          easy to recognize, and on a design portfolio that weakens the claim that I designed what you’re looking at.
+        </p>
+      </li>
+      <li>
+        <b>A full component library (MUI)</b>
+        <span class="tag">The one I know best · rejected</span>
+        <p>
+          I’ve built a design system on it at work, so it would be comfortable. It’s also heavy for a handful of pages,
+          and it would tell the same story twice.
+        </p>
+      </li>
+      <li>
+        <b>Everything from scratch, including keyboard and focus behavior</b>
+        <span class="tag">Most craft · rejected</span>
+        <p>
+          Writing my own focus traps and keyboard handling for a dialog shows effort, but it doesn’t make the site
+          better for anyone. That part is a solved problem.
+        </p>
+      </li>
+      <li class="chosen">
+        <b>Hand-written CSS driven by tokens, with accessible primitives only where needed</b>
+        <span class="tag">Chosen</span>
+        <p>
+          I write the styles and the components. If a hard interactive piece comes up, like a dialog or a tooltip, I use
+          an unstyled primitive (Radix or Base UI) for the behavior and style it myself.
+        </p>
+      </li>
+    </ul>
+
+    <h2>How it works</h2>
+    <p>
+      Every value starts in one token file. Base values (the raw colors and sizes) sit at the bottom, and the semantic
+      tokens the components use, like “text on accent,” point to them. A build step turns that file into CSS custom
+      properties, so the same variables work in the static Astro pages and in the React pieces.
+    </p>
+    <p>
+      The token file also lists the text and background pairs that have to be readable together. If a change pushes one
+      of those pairs below its contrast target, the build fails. I’d rather find that out from a failed build than from
+      someone squinting at the page.
+    </p>
+
+    <h2>What I’m giving up</h2>
+    <p>
+      Speed, mostly. A kit would have had me further along today, and its components have years of edge cases worked out
+      that mine don’t yet. I’m accepting that because the site is small and the payoff is specific: every visible pixel
+      is a decision I made, and I can explain each one.
+    </p>
+    <p>
+      There’s a second payoff. A token file in a known format is something tools can read. Next, I’m building a small
+      tool that lets coding agents look up these tokens and check contrast, so they use the system instead of hardcoding
+      values.
+    </p>
+
+    <h2>The rule I’m keeping</h2>
+    <p>
+      Borrow where it’s a commodity, design where it shows taste. If I catch myself rebuilding focus handling for a
+      dialog, that’s my cue to reach for a primitive, not to write it myself.
+    </p>
+
+    <div class="links">
+      <a href={SITE.repo} data-track-outbound="repo">
+        See the repo ↗
+      </a>
+      <a href="/build-log">Build log →</a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .options {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .options li {
+    margin: 0;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+  }
+  .options li.chosen {
+    border-color: var(--accent-default);
+    border-width: var(--space-1);
+  }
+  .options b {
+    display: block;
+  }
+  .options .tag {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--2);
+    color: var(--text-muted);
+  }
+  .options li.chosen .tag {
+    color: var(--accent-text);
+  }
+  .options p {
+    margin: var(--space-2) 0 0;
+  }
+</style>

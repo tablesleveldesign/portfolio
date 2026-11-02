@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+
+<Base
+  title="About: Todd Ables"
+  description="Todd Ables has spent 12+ years designing software and then building it, mostly tools for the people who use them all day."
+>
+  <article class="page">
+    <h1>Hi, I’m Todd.</h1>
+    <p class="lede">
+      For 12+ years I’ve designed software and then built it, mostly tools for the people who use them all day.
+    </p>
+    <p>
+      I studied computer science at Oklahoma State, then went to SMU Guildhall for game design. There I built levels,
+      designed UI and boss encounters, and shipped team games with designers, artists, and programmers. Guildhall also
+      trained producers alongside the developers, and watching that side of the work is where my interest in product
+      started.
+    </p>
+    <p>
+      Since then I’ve worked in consulting, payments, public safety, and finance. The job has looked about the same in
+      each place: talk with the people who will use something, design it, build it, and keep improving it after launch.
+    </p>
+    <p>
+      The work I go deepest on is design systems. Tokens, components, and the standards that let a lot of developers
+      build consistent UI quickly. Most of that work has been private, so this site is where I start showing how I think
+      about it, out in the open.
+    </p>
+    <p>
+      I live in Fort Worth, Texas, with my wife, our two kids, two cats, and a bearded dragon. We’re planning a move to
+      the Pacific Northwest.
+    </p>
+    <div class="links">
+      <a href={SITE.repo} data-track-outbound="repo">
+        This site’s repo ↗
+      </a>
+      <a href={SITE.linkedin} data-track-outbound="linkedin">
+        LinkedIn ↗
+      </a>
+      <a href="/build-log">Build log →</a>
+    </div>
+  </article>
+</Base>

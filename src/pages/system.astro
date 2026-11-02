@@ -12,6 +12,7 @@ const spaceSteps = Object.entries(tokens.primitive.space).filter(([key]) => key 
 <Base
   title="Design foundation: Todd Ables"
   description="The tokens, type scale, spacing, and components behind this portfolio, built from scratch."
+  noindex
 >
   <header class="page-head">
     <h1>Design foundation</h1>
@@ -28,7 +29,7 @@ const spaceSteps = Object.entries(tokens.primitive.space).filter(([key]) => key 
 
   <section class="block" aria-labelledby="type">
     <h2 id="type">Type scale</h2>
-    <p>A 1.25 ratio from a 16px base, set in the system font stack so nothing loads before text appears.</p>
+    <p>A placeholder scale set in Bricolage Grotesque, until the Figma variables are done.</p>
     <ul class="type-list">
       {typeSteps.map(([step, size]) => (
         <li>
@@ -76,6 +77,7 @@ const spaceSteps = Object.entries(tokens.primitive.space).filter(([key]) => key 
 
 <style>
   .page-head {
+    padding-top: var(--space-18);
     margin-bottom: var(--space-12);
   }
   .block {

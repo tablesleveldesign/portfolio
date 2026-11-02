@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import { BUILD_LOG, formatDate } from '../lib/build-log';
+import { SITE } from '../site';
+---
+
+<Base
+  title="Build log: Todd Ables"
+  description="What changed on this site and why, newest first. The site is a live build."
+>
+  <article class="page">
+    <h1>What changed, and why</h1>
+    <p class="lede">
+      This site is a live build. Each entry is a change I made and the reason behind it, newest first. The code is on{' '}
+      <a href={SITE.repo} data-track-outbound="repo">
+        GitHub
+      </a>
+      .
+    </p>
+    <ol class="log" reversed>
+      {BUILD_LOG.map((entry) => (
+        <li>
+          <time datetime={entry.date}>{formatDate(entry.date)}</time>
+          <div>
+            <h2>{entry.title}</h2>
+            {entry.body.map((paragraph) => (
+              <p set:html={paragraph} />
+            ))}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </article>
+</Base>
+
+<style>
+  .log {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+  }
+  .log li {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: var(--space-1) var(--space-6);
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--border-default);
+  }
+  .log time {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--1);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    padding-top: var(--space-1);
+  }
+  .log h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-2);
+  }
+  .log p {
+    margin: 0;
+  }
+  .log p + p {
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 520px) {
+    .log li {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .log time {
+      padding-top: 0;
+    }
+  }
+</style>
