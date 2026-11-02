@@ -1,46 +1,321 @@
 ---
 import Base from '../layouts/Base.astro';
-import Button from '../components/Button.astro';
-import { SITE } from '../site';
 ---
 
 <Base
-  title="Todd Ables: designer who builds"
-  description="Todd Ables designs and builds web products, from the first conversation with users through launch."
+  title="Todd Ables Portfolio"
+  description="I’m a product engineer who designs what I build, from the first conversation with users through launch and whatever the users need next."
 >
-  <section class="intro">
-    <h1>I design web products, then build them.</h1>
-    <p class="lede">
-      12+ years taking products from the first conversation with users through launch and ongoing support, across
-      financial services, payments, and public safety. Trained in level design at SMU Guildhall.
-    </p>
-    <p class="status">
-      This site is in progress. The design foundation is built first, in public, and the case studies come next.
-    </p>
-    <div class="actions">
-      <Button href="/system">See the design foundation</Button>
-      <Button href={SITE.linkedin} variant="secondary" track="linkedin">
-        LinkedIn
-      </Button>
+  <div class="hero">
+    <div class="intro">
+      <h1 class="name">Todd Ables</h1>
+      <p class="headliner">
+        I’m a product engineer who designs what I build, from the first conversation with users through launch and
+        whatever the users need next.
+      </p>
+      <div class="cta">
+        <a href="/writing/hand-written-css">Read the first piece →</a>
+        <a href="/build-log">Build log →</a>
+      </div>
     </div>
-  </section>
+    <ul class="bar" aria-label="Across the top of the T: the broad side">
+      <li>Product &amp; research</li>
+      <li>Front-end architecture</li>
+      <li>AI dev tooling</li>
+      <li>Game &amp; level design</li>
+    </ul>
+    <div class="leg" aria-hidden="true"></div>
+    <div class="depthwrap">
+      <p class="leg-title">Design systems</p>
+      <ul class="depth" aria-label="Down the leg of the T: the deep side">
+        <li>
+          <b>Tokens</b>
+          <span>every color, size, and space</span>
+        </li>
+        <li>
+          <b>Components</b>
+          <span>the parts teams build with</span>
+        </li>
+        <li>
+          <b>Patterns</b>
+          <span>rules that keep screens consistent</span>
+        </li>
+        <li>
+          <b>Adoption</b>
+          <span>getting other developers to use it</span>
+        </li>
+      </ul>
+      <figure class="tquote">
+        <blockquote>
+          <p>
+            “We value <span class="nowrap">‘T-shaped’</span> people.”
+          </p>
+        </blockquote>
+        <figcaption>
+          Valve,{' '}
+          <a
+            href="https://media.steampowered.com/apps/valve/Valve_Handbook_LowRes.pdf"
+            data-track-outbound="valve-handbook"
+          >
+            <cite>Handbook for New Employees</cite>
+          </a>{' '}
+          (2012). Broad across the top, deep down the leg.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
 </Base>
 
 <style>
+  .hero {
+    --leg: var(--space-11);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--leg) minmax(0, 1fr);
+    margin-top: var(--space-16);
+  }
+
+  /* The crossbar reads as a legend, with dotted leaders between the skills. It's as thick as the leg. */
+  .bar {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-5);
+    min-height: var(--leg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--1);
+    line-height: 1.3;
+  }
+  .bar li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: 1 1 auto;
+    white-space: nowrap;
+    opacity: 0.88;
+  }
+  .bar li:last-child {
+    flex: none;
+  }
+  .bar li:not(:last-child)::after {
+    content: '';
+    flex: 1;
+    height: 4px;
+    opacity: 0.55;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1.4px);
+    background-size: 9px 4px;
+    background-repeat: repeat-x;
+    background-position: left center;
+  }
+  .leg {
+    grid-column: 2;
+    grid-row: 2;
+    background: var(--accent-default);
+  }
+
   .intro {
-    padding-bottom: var(--space-16);
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-8) var(--space-11) 0 0;
   }
-  .lede {
-    font-size: var(--font-size-1);
-    color: var(--text-secondary);
+  .name {
+    margin: 0;
+    font-size: clamp(var(--font-hero-name-min), 5vw, var(--font-hero-name-max));
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
   }
-  .status {
-    color: var(--text-muted);
+  .headliner {
+    margin: var(--space-6) 0 0;
+    font-size: clamp(var(--font-hero-headline-min), 2.35vw, var(--font-hero-headline-max));
+    font-weight: var(--font-weight-medium);
+    line-height: 1.26;
+    letter-spacing: -0.01em;
+    max-width: 26ch;
   }
-  .actions {
+  .cta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
+    gap: 0 var(--space-8);
+    padding-top: var(--space-5);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-hero-link);
+    font-weight: var(--font-weight-medium);
+  }
+  .cta a {
+    display: inline-block;
+    padding: var(--space-3) 0;
+  }
+
+  .depthwrap {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-10) 0 0 var(--space-10);
+  }
+  .leg-title {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--2);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+  }
+  .depth {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-6);
+  }
+  .depth li {
+    position: relative;
+  }
+  /* A tick from the T's leg to each step. */
+  .depth li::before {
+    content: '';
+    position: absolute;
+    top: 0.62em;
+    left: calc(var(--space-10) * -1);
+    width: var(--space-7);
+    height: 2px;
+    background: var(--accent-default);
+  }
+  .depth b {
+    display: block;
+    font-size: var(--font-hero-step);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--font-leading-tight);
+  }
+  .depth span {
+    display: block;
+    margin-top: var(--space-1);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--2);
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  .tquote {
+    margin: auto 0 0;
+    padding: var(--space-12) 0 var(--space-3);
+    max-width: 46ch;
+  }
+  .tquote blockquote {
+    margin: 0;
+  }
+  .tquote blockquote p {
+    margin: 0;
+    font-family: var(--font-family-mono);
+    font-style: italic;
+    font-size: var(--font-hero-quote);
+    line-height: 1.5;
+  }
+  .tquote figcaption {
+    margin-top: var(--space-1);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size--2);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .tquote cite {
+    font-style: normal;
+  }
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  /* Name and headline go first, then the T. Steps run down the leg's right side; the title and quote balance the left. */
+  @media (max-width: 860px) {
+    .hero {
+      --leg: var(--space-7);
+      margin-top: var(--space-10);
+    }
+    .intro {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      padding: 0 0 var(--space-9);
+    }
+    .cta {
+      padding-top: var(--space-3);
+    }
+    .bar {
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-1) var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--font-hero-bar-small);
+    }
+    .bar li {
+      opacity: 1;
+    }
+    .bar li:nth-child(odd) {
+      gap: var(--space-2);
+    }
+    .bar li:nth-child(even) {
+      justify-self: end;
+    }
+    .bar li:nth-child(even)::after {
+      display: none;
+    }
+    .leg {
+      grid-row: 3;
+    }
+    .depthwrap {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) var(--leg) minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      padding: var(--space-6) 0 0;
+    }
+    .leg-title {
+      grid-column: 1;
+      grid-row: 1;
+      margin: 0;
+      padding: var(--space-1) var(--space-4) 0 0;
+      font-size: var(--font-hero-label-small);
+      text-align: right;
+    }
+    .depth {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      gap: var(--space-4);
+      padding-left: var(--space-4);
+    }
+    .depth li::before {
+      left: calc(var(--space-4) * -1);
+      width: var(--space-3);
+    }
+    .depth b {
+      font-size: var(--font-hero-step-small);
+    }
+    .depth span {
+      margin-top: 2px;
+      font-size: var(--font-hero-detail-small);
+    }
+    .tquote {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: end;
+      margin: 0;
+      padding: var(--space-6) var(--space-4) var(--space-1) 0;
+      text-align: right;
+    }
+    .tquote blockquote p {
+      font-size: var(--font-size--1);
+    }
+    .tquote figcaption {
+      font-size: var(--font-hero-detail-small);
+    }
   }
 </style>
