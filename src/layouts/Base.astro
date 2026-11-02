@@ -70,7 +70,7 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
           <a href="/writing/hand-written-css" aria-current={path.startsWith('/writing') ? 'page' : undefined}>
             Writing
           </a>
-          <a href={SITE.repo} data-track-outbound="repo">
+          <a href={SITE.repo} target="_blank" rel="noopener noreferrer" data-track-outbound="repo">
             GitHub ↗
           </a>
         </nav>
@@ -83,10 +83,10 @@ const analyticsOn = import.meta.env.PROD && Boolean(import.meta.env.PUBLIC_POSTH
     <footer class="site-footer gutter">
       <span>© 2026 Todd Ables · Built in public</span>
       <nav aria-label="Elsewhere">
-        <a href={SITE.repo} data-track-outbound="repo">
+        <a href={SITE.repo} target="_blank" rel="noopener noreferrer" data-track-outbound="repo">
           GitHub
         </a>
-        <a href={SITE.linkedin} data-track-outbound="linkedin">
+        <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" data-track-outbound="linkedin">
           LinkedIn
         </a>
       </nav>
