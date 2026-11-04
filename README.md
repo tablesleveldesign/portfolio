@@ -48,7 +48,7 @@ tokens/
   lib.mjs          resolve references, generate CSS, check contrast
 scripts/
   build-tokens.mjs writes src/styles/tokens.css, fails on contrast errors
-public/            favicon files, served as they are
+public/            favicon files and the social preview image, served as they are
 src/
   components/      Astro components, plus React islands (*.tsx)
   lib/analytics.ts PostHog setup and the list of tracked events
